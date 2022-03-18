@@ -8,8 +8,8 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 
 	"github.com/bekzourdk/orders/internal/domain/order"
-	"github.com/bekzourdk/orders/internal/pb"
 	"github.com/bekzourdk/orders/internal/service"
+	"github.com/bekzourdk/orders/pb"
 )
 
 type OrdersGRPC struct {

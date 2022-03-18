@@ -13,8 +13,8 @@ import (
 
 	"github.com/bekzourdk/orders/internal/config"
 	ordersGRPC "github.com/bekzourdk/orders/internal/delivery/grpc"
-	"github.com/bekzourdk/orders/internal/pb"
 	"github.com/bekzourdk/orders/internal/service"
+	"github.com/bekzourdk/orders/pb"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
