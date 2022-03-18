@@ -1,0 +1,51 @@
+services:
+  orders_service:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      args:
+        NAME: orders
+        CONFIG: config.docker.yaml
+    ports:
+      - "8090:8090"
+      - "8080:8080"
+    depends_on:
+        postgres:
+          condition: service_healthy
+    restart: always
+    networks:
+      - orders_network
+    
+  postgres:
+    image: postgres:12.5-alpine
+    ports:
+      - "5432:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - orders_network
+
+  migrate:
+      image: migrate/migrate
+      networks:
+          - orders_network
+      volumes:
+          - ./migrations:/migrations
+      command: ["-path", "/migrations", "-database",  "postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable", "up"]
+      depends_on:
+        postgres:
+          condition: service_healthy
+      links: 
+          - postgres
+            
+networks:
+  orders_network:
+    driver: bridge

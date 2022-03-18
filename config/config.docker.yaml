@@ -1,0 +1,7 @@
+db:
+  driver: postgres
+  source: postgres://postgres:postgres@postgres:5432/postgres?sslmode=disable
+
+servers:
+  grpc: :8080
+  http: :8090
